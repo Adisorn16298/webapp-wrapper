@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <iframe id="app-frame" src=""></iframe>
+
+    <script>
+        // โค้ดสำหรับอ่านค่า ?url=... จากลิงก์ที่เราส่งมา
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+
+        if (url) {
+            document.getElementById('app-frame').src = url;
+        } else {
+            document.body.innerHTML = '<h2 style="text-align:center; margin-top:20px;">กรุณาใส่ลิงก์ต่อท้าย URL เช่น ?url=https://script.google.com/...</h2>';
+        }
+
+        // ลงทะเบียน Service Worker เพื่อให้ติดตั้งเป็นแอปได้
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
